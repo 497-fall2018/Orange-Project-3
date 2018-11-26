@@ -6,12 +6,13 @@ export class Main extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button block>
+        <Button block
+          onPress={() => this.props.navigation.navigate('Host')}>
           <Text>Host</Text>
         </Button>
 
         <Button block 
-                onPress={() => this.props.navigation.navigate('Details')}>
+          onPress={() => this.props.navigation.navigate('Join')}>
           <Text>Join</Text>
         </Button>
 
