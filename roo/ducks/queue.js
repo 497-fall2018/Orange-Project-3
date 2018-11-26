@@ -10,7 +10,7 @@ export const GOT_NEW_ENTRY = 'roo/queue/GOT_NEW_ENTRY';
 
 const INITIAL_STATE = {
     error_message: "",
-    entries: [],
+    entries: ['mark', 'Pepperbinder Lady'],
 };
 
 // reducers
@@ -18,13 +18,13 @@ export default function reducer(state = INITIAL_STATE, action) {
     switch (action.type) {
         case JOIN_ROOM:
         case JOINED_ROOM:
-            if (action.payload) {
-                console.log(action.payload)
-                return {
-                    ...state,
-                    entries: action.payload
-                }
-            }
+            // if (action.payload) {
+            //     console.log(action.payload)
+            //     return {
+            //         ...state,
+            //         entries: action.payload
+            //     }
+            // }
         case GOT_NEW_ENTRY:
             if (action.payload) {
                 var new_entries = state.entries.slice()
@@ -33,6 +33,13 @@ export default function reducer(state = INITIAL_STATE, action) {
                     ...state,
                     entries: new_entries
                 }
+            }
+        case SEND_ENTRY:
+            var new_entries = state.entries.slice()
+            new_entries.push(action.payload)
+            return {
+                ...state,
+                entries: new_entries
             }
         
         default:
@@ -66,6 +73,7 @@ export const send_entry = (socket, room, username) => {
     return (dispatch, getState) => {
         dispatch({
             type: SEND_ENTRY,
+            payload: username
         })
         socket.emit('new_entry', {username, room})
     }

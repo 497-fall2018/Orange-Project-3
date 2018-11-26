@@ -21,7 +21,7 @@ class FacilitatorComponent extends React.Component {
     super(props);
     socket = io.connect(APIConfig.apiroot);
     this.props.join_room(socket, this.props.roomcode, this.props.username);
-    socket.on('joined_room',(res)=>{
+    socket.on('joined_room', (res)=>{
       this.props.joined_room(res);
     })
     // socket.on('new_entry',(res)=>{
