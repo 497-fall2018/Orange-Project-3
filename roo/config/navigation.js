@@ -1,6 +1,7 @@
 import { createStackNavigator, createAppContainer, createSwitchNavigator } from "react-navigation";
 
 import {
+  Attendee,
   Facilitator,
   Host,
   Join,
@@ -19,16 +20,16 @@ const HomeStack = createStackNavigator({
     },
 });
 const FacilitatorStack = createStackNavigator({
-    Host: {
+    Facilitator: {
       screen: Facilitator 
     },
 });
 const AttendeeStack = createStackNavigator({
-    Join: {
-      screen: Join
+    Attendee: {
+      screen: Attendee
     },
 });
-const AppNavigator = createSwitchNavigator(
+export const AppNavigator = createSwitchNavigator(
   // You could add another route here for authentication.
   // Read more at https://reactnavigation.org/docs/en/auth-flow.html
   {

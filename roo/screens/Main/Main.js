@@ -5,7 +5,7 @@ import { Container, Header, Content, Button, Text } from 'native-base';
 export class Main extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
+      <View styles={styles.container}>
         <Button block
           onPress={() => this.props.navigation.navigate('Host')}>
           <Text>Host</Text>
@@ -24,8 +24,9 @@ export class Main extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
   },
 });

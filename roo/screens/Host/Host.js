@@ -1,46 +1,38 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Container, Header, Content, Button, Text } from 'native-base';
+import { Text, Input, Item, Button } from 'native-base';
+import { connect } from 'react-redux';
 
-export class Host extends React.Component {
+
+import { 
+  thunk_make_room,
+} from '../../ducks/host';
+
+class HostComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       roomcode: '',
-      error_message: '',
     }
   }
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
+  componentDidUpdate(prevProps) {
+    if (this.props.roomcode !== "") {
+      this.props.navigation.navigate('Facilitator');
+    }
   }
-  
   submitRoomCode() {
-    const url = APIConfig.apiRoot + '/makeroom'
-    axios.post(url, {roomcode:this.state.roomcode})
-    .then((response) => {
-      // move them to other screen.
-      this.props.navigation.navigate('', {
-        roomcode: this.state.roomcode
-      })
-    })
-    .catch((err) => {
-      // show error message
-      this.setState({
-        ...this.state,
-        error_message: "Invalid roomcode. Check again with the facilitator"
-      })
-    })
+    this.props.make_room(this.state.roomcode);
   }
   
   render() {
     return (
       <View style={styles.container}>
           <Text>Host a meeting</Text>
-          {this.state.error_message === '' ? null : <Text style={{color:'red'}}>{this.state.error_message}</Text>}
+          {this.props.error_message === '' ? null : <Text style={{color:'red'}}>{this.props.error_message}</Text>}
 
           <Item rounded>
             <Input 
-              placeholder='Put in your meeting code here' 
+              placeholder='What will your meeting code be?' 
               value={this.state.roomcode}
               onChangeText={(e) => {this.setState({...this.state, roomcode: e})}}
               />
@@ -62,3 +54,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export { HostComponent };
+
+const mapStateToProps = (state, ownProps) => {
+  const { host } = state;
+  const { error_message, roomcode } = host;
+  return {
+      ...ownProps,
+      error_message,
+      roomcode,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+      make_room: (roomcode) => {
+          dispatch(thunk_make_room(roomcode))
+      },
+  }
+}
+
+export const Host = connect(mapStateToProps, mapDispatchToProps)(HostComponent);

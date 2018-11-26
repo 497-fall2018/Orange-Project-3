@@ -8,6 +8,8 @@ import APIConfig from '../../config/api';
 import {
   join_room,
   joined_room,
+  send_entry,
+  got_new_entry,
 } from '../../ducks/queue';
 
 import {
@@ -16,7 +18,7 @@ import {
 
 let socket;
 
-class FacilitatorComponent extends React.Component {
+class AttendeeComponent extends React.Component {
   constructor(props) {
     super(props);
     socket = io.connect(APIConfig.apiroot);
@@ -24,9 +26,14 @@ class FacilitatorComponent extends React.Component {
     socket.on('joined_room',(res)=>{
       this.props.joined_room(res);
     })
-    // socket.on('new_entry',(res)=>{
-    //   this.props.got_new_entry(res);
-    // });
+    socket.on('got_new',(res)=>{
+      this.props.got_new_entry(res);
+    });
+  }
+
+  sendNewEntry() {
+    console.log('at send new entry');
+    this.props.send_entry(socket, this.props.roomcode, this.props.username);
   }
   
   render() {
@@ -36,6 +43,12 @@ class FacilitatorComponent extends React.Component {
           <Text>Welcome, {this.props.username}</Text>
           {this.props.error_message === '' ? null : <Text style={{color:'red'}}>{this.props.error_message}</Text>}
           <Queue payload={this.props.entries} />
+          <Button
+            onPress={() => this.sendNewEntry()}>
+            <Text>
+              Stand in line
+            </Text>
+          </Button>
       </View>
     );
   }
@@ -50,11 +63,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export { FacilitatorComponent };
+export { AttendeeComponent };
 
 const mapStateToProps = (state, ownProps) => {
-  const { host, queue } = state;
-  const { error_message, roomcode, username } = host;
+  const { join, queue } = state;
+  const { error_message, roomcode, username } = join;
   const { entries } = queue;
   return {
       ...ownProps,
@@ -72,8 +85,14 @@ const mapDispatchToProps = dispatch => {
     },
     joined_room: (entries) => {
       dispatch(joined_room(entries))
-    }
+    },
+    send_entry: (socket, room, username) => {
+      dispatch(send_entry(socket, room, username))
+    },
+    got_new_entry: (new_entry) => {
+      dispatch(got_new_entry(new_entry))
+    },
   }
 }
 
-export const Facilitator = connect(mapStateToProps, mapDispatchToProps)(FacilitatorComponent);
+export const Attendee = connect(mapStateToProps, mapDispatchToProps)(AttendeeComponent);

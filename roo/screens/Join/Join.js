@@ -1,45 +1,35 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, Input, Item, Button } from 'native-base';
-import APIConfig from '../../config/api';
-import axios from 'axios';
+import { connect } from 'react-redux';
 
-export class Join extends React.Component {
+import { 
+  thunk_join_room,
+} from '../../ducks/join';
+
+class JoinComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       roomcode: '',
-      error_message: '',
     }
   }
-  shouldComponentUpdate(nextProps, nextState) {
-    return true;
+
+  componentDidUpdate(prevProps) {
+    if (this.props.roomcode !== "") {
+      this.props.navigation.navigate('Attendee');
+    }
   }
   
   submitRoomCode() {
-    const url = APIConfig.apiRoot + '/checkroom'
-    axios.post(url, {roomcode:this.state.roomcode})
-    .then((response) => {
-      // move them to other screen.
-      this.props.navigation.navigate('Attendee', {
-        roomcode: this.state.roomcode
-      })
-    })
-    .catch((err) => {
-      // show error message
-      this.setState({
-        ...this.state,
-        error_message: "Invalid roomcode. Check again with the facilitator"
-      })
-    })
+    this.props.join_room(this.state.roomcode);
   }
   
   render() {
-    console.log(this.state);
     return (
       <View style={styles.container}>
           <Text>Join a meeting</Text>
-          {this.state.error_message === '' ? null : <Text style={{color:'red'}}>{this.state.error_message}</Text>}
+          {this.props.error_message === '' ? null : <Text style={{color:'red'}}>{this.props.error_message}</Text>}
 
           <Item rounded>
             <Input 
@@ -65,3 +55,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export { JoinComponent };
+
+const mapStateToProps = (state, ownProps) => {
+  const { join } = state;
+  const { error_message, roomcode } = join;
+  return {
+      ...ownProps,
+      error_message,
+      roomcode,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+      join_room: (roomcode) => {
+          dispatch(thunk_join_room(roomcode))
+      },
+  }
+}
+
+export const Join = connect(mapStateToProps, mapDispatchToProps)(JoinComponent);
