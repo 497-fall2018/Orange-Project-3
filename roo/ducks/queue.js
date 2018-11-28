@@ -18,13 +18,13 @@ export default function reducer(state = INITIAL_STATE, action) {
     switch (action.type) {
         case JOIN_ROOM:
         case JOINED_ROOM:
-            // if (action.payload) {
-            //     console.log(action.payload)
-            //     return {
-            //         ...state,
-            //         entries: action.payload
-            //     }
-            // }
+            if (action.payload) {
+                console.log(action.payload)
+                return {
+                    ...state,
+                    entries: action.payload
+                }
+            }
         case GOT_NEW_ENTRY:
             if (action.payload) {
                 var new_entries = state.entries.slice()
@@ -47,10 +47,7 @@ export default function reducer(state = INITIAL_STATE, action) {
     }
 }
 
-// thunk combo
-
 // thunk
-
 export const join_room = (socket, room, username) => {
 	return (dispatch, getState) => {
         dispatch({ 
