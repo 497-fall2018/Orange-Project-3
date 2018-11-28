@@ -18,13 +18,13 @@ export class Main extends React.Component {
           <Button block
             style={styles.button}
             onPress={() => this.props.navigation.navigate('Host')}>
-            <Text>Host</Text>
+            <Text>Host a Meeting</Text>
           </Button>
 
           <Button block
             style={styles.button}
             onPress={() => this.props.navigation.navigate('Join')}>
-            <Text>Join</Text>
+            <Text>Join a Meeting</Text>
           </Button>
 
       </View>
