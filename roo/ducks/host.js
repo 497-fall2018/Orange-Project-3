@@ -28,7 +28,7 @@ export default function reducer(state = INITIAL_STATE, action) {
         case MAKE_ROOM_FAILURE:
             return {
                 ...state,
-                error_message: "Check with your facilitator for your room name"
+                error_message: "Room with that name already exists. Try another one."
             }
         
         default:

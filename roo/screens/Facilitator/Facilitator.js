@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, Input, Item, Button } from 'native-base';
 import { connect } from 'react-redux';
-import io from "socket.io-client";
+import io from "socket.io-client/dist/socket.io";
 import APIConfig from '../../config/api';
 
 import {
@@ -19,7 +19,8 @@ let socket;
 class FacilitatorComponent extends React.Component {
   constructor(props) {
     super(props);
-    socket = io.connect(APIConfig.apiroot);
+    socket = io.connect(APIConfig.apiRoot, {transports: ['websocket']});
+    console.log(socket);
     this.props.join_room(socket, this.props.roomcode, this.props.username);
     socket.on('joined_room', (res)=>{
       this.props.joined_room(res);

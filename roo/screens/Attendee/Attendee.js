@@ -21,7 +21,8 @@ let socket;
 class AttendeeComponent extends React.Component {
   constructor(props) {
     super(props);
-    socket = io.connect(APIConfig.apiroot);
+    socket = io.connect(APIConfig.apiRoot, {transports: ['websocket']});
+    console.log(socket);
     this.props.join_room(socket, this.props.roomcode, this.props.username);
     socket.on('joined_room',(res)=>{
       this.props.joined_room(res);
