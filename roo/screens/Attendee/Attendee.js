@@ -7,7 +7,7 @@ import APIConfig from '../../config/api';
 
 import {
   join_room,
-  joined_room,
+  all_entries,
   send_entry,
   got_new_entry,
 } from '../../ducks/queue';
@@ -22,10 +22,9 @@ class AttendeeComponent extends React.Component {
   constructor(props) {
     super(props);
     socket = io.connect(APIConfig.apiRoot, {transports: ['websocket']});
-    console.log(socket);
     this.props.join_room(socket, this.props.roomcode, this.props.username);
-    socket.on('joined_room',(res)=>{
-      this.props.joined_room(res);
+    socket.on('all_entries',(res)=>{
+      this.props.all_entries(res);
     })
     socket.on('got_new',(res)=>{
       this.props.got_new_entry(res);
@@ -33,7 +32,6 @@ class AttendeeComponent extends React.Component {
   }
 
   sendNewEntry() {
-    console.log('at send new entry');
     this.props.send_entry(socket, this.props.roomcode, this.props.username);
   }
   
@@ -84,8 +82,8 @@ const mapDispatchToProps = dispatch => {
     join_room: (socket, room, username) => {
       dispatch(join_room(socket, room, username))
     },
-    joined_room: (entries) => {
-      dispatch(joined_room(entries))
+    all_entries: (entries) => {
+      dispatch(all_entries(entries))
     },
     send_entry: (socket, room, username) => {
       dispatch(send_entry(socket, room, username))

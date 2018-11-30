@@ -8,11 +8,13 @@ import _ from 'lodash';
 class Queue extends React.Component {
     ListView() {
         return _.map(this.props.payload, (item, index) => {
-            return <View key={index}>
-                <Text>
-                    {item}
-                </Text>
-            </View>
+            if (item) {
+                return <View key={index}>
+                    <Text>
+                        {item['member']}
+                    </Text>
+                </View>
+            }
         })
     }
     
