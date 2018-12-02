@@ -41,7 +41,7 @@ class AttendeeComponent extends React.Component {
           <Text>Room: {this.props.roomcode}</Text>
           <Text>Welcome, {this.props.username}</Text>
           {this.props.error_message === '' ? null : <Text style={{color:'red'}}>{this.props.error_message}</Text>}
-          <Queue payload={this.props.entries} />
+          <Queue label={'Attendee'}/>
           <Button
             onPress={() => this.sendNewEntry()}>
             <Text>
