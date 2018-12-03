@@ -3,23 +3,24 @@ import APIConfig from '../config/api';
 
 // action types
 export const JOIN_ROOM = 'roo/queue/JOIN_ROOM';
-export const JOINED_ROOM = 'roo/queue/JOINED_ROOM';
+export const ALL_ENTRIES = 'roo/queue/ALL_ENTRIES';
 export const SEND_ENTRY = 'roo/queue/SEND_ENTRY';
 export const GOT_NEW_ENTRY = 'roo/queue/GOT_NEW_ENTRY';
+export const DELETE_ENTRY = 'roo/queue/DELETE_ENTRY';
 
 
 const INITIAL_STATE = {
     error_message: "",
-    entries: ['mark', 'Pepperbinder Lady'],
+    entries: [],
 };
 
 // reducers
 export default function reducer(state = INITIAL_STATE, action) {
     switch (action.type) {
         case JOIN_ROOM:
-        case JOINED_ROOM:
+        case ALL_ENTRIES:
             if (action.payload) {
-                console.log(action.payload)
+                console.log(action.payload);
                 return {
                     ...state,
                     entries: action.payload
@@ -57,10 +58,10 @@ export const join_room = (socket, room, username) => {
 	}	
 }
 
-export const joined_room = (entries) => {
+export const all_entries = (entries) => {
     return (dispatch) => {
         dispatch({
-            type: JOINED_ROOM,
+            type: ALL_ENTRIES,
             payload: entries
         })
     }
@@ -85,4 +86,15 @@ export const got_new_entry = (new_entry) => {
     }
 }
 
-// action creators
+export const delete_entry = (socket, target) => {
+    return (dispatch, getState) => {
+        var state = getState();
+        var admin = state['host']
+        const username = admin['username']
+        const room = admin['roomcode']
+        dispatch({
+            type: DELETE_ENTRY,
+        })
+        socket.emit('delete_entry', {username, room, target})
+    }
+}

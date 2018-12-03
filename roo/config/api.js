@@ -1,5 +1,5 @@
 class APIConfig {
-    static apiRoot = 'http://localhost:5000';
+    static apiRoot = 'http://de633647.ngrok.io';
 }
 
 export default APIConfig;
