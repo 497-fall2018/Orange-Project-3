@@ -51,6 +51,12 @@ class AttendeeComponent extends React.Component {
               style={{ fontSize: 20 }}
           />
           <Button
+            onPress={() => this.setState({dummy: 1})}>
+            <Text>
+              Reset
+            </Text>
+          </Button>
+          <Button
             onPress={() => this.sendNewEntry()}>
             <Text>
               Stand in line
