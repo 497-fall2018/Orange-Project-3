@@ -29,12 +29,12 @@ class FacilitatorComponent extends React.Component {
       this.props.got_new_entry(res);
     });
   }
-  
+
   render() {
     return (
       <View style={styles.container}>
-          <Text>Room: {this.props.roomcode}</Text>
-          <Text>Welcome, {this.props.username}</Text>
+          <Text style={styles.roomTitle}>  Room: {this.props.roomcode}</Text>
+          <Text style={styles.welcomeTitle}>  Welcome, {this.props.username}</Text>
           {this.props.error_message === '' ? null : <Text style={{color:'red'}}>{this.props.error_message}</Text>}
           <Queue label={"Facilitator"} socket={socket}/>
       </View>
@@ -43,12 +43,38 @@ class FacilitatorComponent extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  // container: {
+  //   flex: 1,
+  //   backgroundColor: '#fff',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
+
   container: {
+    //display: 'flex',
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    paddingBottom: 100,
   },
+
+
+  roomTitle: {
+    marginTop: 10,
+    marginBottom: 25,
+    fontSize: 50
+    //fontFamily: "Roboto"
+  },
+
+  welcomeTitle: {
+    marginTop: 10,
+    marginBottom: 25,
+    fontSize: 50
+    //fontFamily: "Roboto"
+  },
+
 });
 
 export { FacilitatorComponent };

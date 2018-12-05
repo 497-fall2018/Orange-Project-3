@@ -8,7 +8,7 @@ import Swipeout from 'react-native-swipeout';
 import {
     delete_entry,
   } from '../../ducks/queue';
-  
+
 
 class QueueComponent extends React.Component {
     ListView() {
@@ -23,7 +23,8 @@ class QueueComponent extends React.Component {
                 ]
                 if (this.props.label === 'Facilitator'){
                     return (
-                    <Swipeout 
+                    <Swipeout
+                        style={styles.member}
                         key={index}
                         right={swipeoutBtns}
                         backgroundColor='rgba(52, 52, 52, 0)'
@@ -37,21 +38,21 @@ class QueueComponent extends React.Component {
                     )
                 } else {
                     return (
-                    <View key={index}>
+                    <View key={index}
+                          style={styles.member}
+                    >
                             <Text>
                                 {item['member']}
                             </Text>
                     </View>
-
                     )
                 }
-
            }
         })
     }
-    
+
     render() {
-        
+
       return (
         <View style={styles.container}>
             {this.ListView()}
@@ -59,7 +60,7 @@ class QueueComponent extends React.Component {
       );
     }
   }
-  
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -67,8 +68,19 @@ class QueueComponent extends React.Component {
       alignItems: 'center',
       justifyContent: 'center',
     },
+
+    member: {
+      marginTop: 10,
+      marginBottom: 10,
+      backgroundColor: 'lightgrey',
+    },
+
+    memberText: {
+      fontSize: 20,
+    },
+
   });
-  
+
   export { QueueComponent };
 
   const mapStateToProps = (state, ownProps) => {
@@ -79,7 +91,7 @@ class QueueComponent extends React.Component {
         entries,
     };
   };
-  
+
   const mapDispatchToProps = dispatch => {
     return {
       delete_entry: (socket, target) => {
@@ -87,6 +99,5 @@ class QueueComponent extends React.Component {
       }
     }
   }
-  
+
   export const Queue = connect(mapStateToProps, mapDispatchToProps)(QueueComponent);
-  

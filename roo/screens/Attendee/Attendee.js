@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Text, Input, Item, Button } from 'native-base';
+import { Text, Input, Item, Button, H1, H2, H3, Card } from 'native-base';
+import { Col, Row, Grid } from "react-native-easy-grid";
 import { connect } from 'react-redux';
 import io from "socket.io-client";
 import APIConfig from '../../config/api';
@@ -34,21 +35,65 @@ class AttendeeComponent extends React.Component {
   sendNewEntry() {
     this.props.send_entry(socket, this.props.roomcode, this.props.username);
   }
-  
+
   render() {
     return (
-      <View style={styles.container}>
-          <Text>Room: {this.props.roomcode}</Text>
-          <Text>Welcome, {this.props.username}</Text>
-          {this.props.error_message === '' ? null : <Text style={{color:'red'}}>{this.props.error_message}</Text>}
-          <Queue label={'Attendee'}/>
-          <Button
-            onPress={() => this.sendNewEntry()}>
-            <Text>
-              Stand in line
-            </Text>
-          </Button>
-      </View>
+      <Grid>
+
+        <Row size={1}>
+          <View style={styles.upperLeft}>
+              <Card>
+
+                    <View>
+                      <H1 textAlign="left"
+                          color="white">Room:</H1>
+                      <Text textAlign="center"> {this.props.roomcode} </Text>
+                    </View>
+
+                    <View>
+                      <H1 textAlign="left"
+                          color="white">Name:</H1>
+                      <Text textAlign="center"> {this.props.username}</Text>
+                    </View>
+
+              </Card>
+            </View>
+        </Row>
+
+
+
+        <Row size={5}>
+            <View style={styles.container}>
+                <Queue label={'Attendee'}/>
+            </View>
+        </Row>
+
+        <Row size={1}>
+          <View style={styles.lowerLeft}>
+                <Button
+                  onPress={() => this.sendNewEntry()}>
+                  <Text>
+                    Stand in line
+                  </Text>
+                </Button>
+          </View>
+        </Row>
+
+      </Grid>
+
+      // <View style={styles.container}>
+      //     <Text>Room: {this.props.roomcode}</Text>
+      //     <Text>Welcome, {this.props.username}</Text>
+      //     {this.props.error_message === '' ? null : <Text style={{color:'red'}}>{this.props.error_message}</Text>}
+      //     <Queue label={'Attendee'}/>
+      //     <Button
+      //       onPress={() => this.sendNewEntry()}>
+      //       <Text>
+      //         Stand in line
+      //       </Text>
+      //     </Button>
+      // </View>
+
     );
   }
 }
@@ -60,6 +105,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  upperLeft: {
+    flex: 1,
+    backgroundColor: '#97D9FC',
+    justifyContent: 'center',
+    margin: 1
+  },
+
+  lowerLeft: {
+    flex: 1,
+    backgroundColor: '#97D9FC',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+
+  // headerText: {
+  //   textAlign: "left"
+  // },
+  //
+  // infoText: {
+  //   textAlign: "center"
+  // },
+
 });
 
 export { AttendeeComponent };
