@@ -34,7 +34,7 @@ class AttendeeComponent extends React.Component {
   sendNewEntry() {
     this.props.send_entry(socket, this.props.roomcode, this.props.username);
   }
-  
+
   render() {
     return (
       <View style={styles.container}>
