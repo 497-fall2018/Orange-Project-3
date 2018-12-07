@@ -41,26 +41,23 @@ class AttendeeComponent extends React.Component {
       <Grid>
 
         <Row size={1}>
-          <View style={styles.upperLeft}>
-              <Card>
-
-                    <View>
-                      <H1 textAlign="left"
-                          color="white">Room:</H1>
+          <View style={styles.gridTop}>
+              <Card style={styles.cardTop}>
+                <View style={styles.container, styles.topContainer}>
+                    <View style={styles.container}>
+                      <H1>Room:</H1>
                       <Text textAlign="center"> {this.props.roomcode} </Text>
                     </View>
 
-                    <View>
-                      <H1 textAlign="left"
-                          color="white">Name:</H1>
+                    <View style={styles.container}>
+                      <H1>Name:</H1>
                       <Text textAlign="center"> {this.props.username}</Text>
                     </View>
+                </View>
 
               </Card>
             </View>
         </Row>
-
-
 
         <Row size={5}>
             <View style={styles.container}>
@@ -69,30 +66,20 @@ class AttendeeComponent extends React.Component {
         </Row>
 
         <Row size={1}>
-          <View style={styles.lowerLeft}>
-                <Button
-                  onPress={() => this.sendNewEntry()}>
-                  <Text>
-                    Stand in line
-                  </Text>
-                </Button>
+          <View style={styles.gridTop}>
+              <Card style={styles.container, styles.cardBot}>
+                  <Button block
+                   onPress={() => this.sendNewEntry()}
+                   style={styles.button}>
+                    <Text>Stand in Line</Text>
+                  </Button>
+              </Card>
           </View>
         </Row>
 
       </Grid>
 
-      // <View style={styles.container}>
-      //     <Text>Room: {this.props.roomcode}</Text>
-      //     <Text>Welcome, {this.props.username}</Text>
-      //     {this.props.error_message === '' ? null : <Text style={{color:'red'}}>{this.props.error_message}</Text>}
-      //     <Queue label={'Attendee'}/>
-      //     <Button
-      //       onPress={() => this.sendNewEntry()}>
-      //       <Text>
-      //         Stand in line
-      //       </Text>
-      //     </Button>
-      // </View>
+
 
     );
   }
@@ -106,14 +93,36 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  upperLeft: {
+
+  topContainer: {
+    flexDirection:"row"
+  },
+
+  button: {
+    marginRight: 20,
+    marginLeft: 20,
+  },
+
+  gridTop: {
     flex: 1,
     backgroundColor: '#97D9FC',
     justifyContent: 'center',
-    margin: 1
   },
 
-  lowerLeft: {
+  cardTop: {
+    marginLeft: 15,
+    marginRight: 15
+  },
+
+  cardBot: {
+    marginLeft: 15,
+    marginRight: 15,
+    paddingBottom: 10,
+    paddingTop: 10,
+
+  },
+
+  gridBot: {
     flex: 1,
     backgroundColor: '#97D9FC',
     alignItems: 'center',
