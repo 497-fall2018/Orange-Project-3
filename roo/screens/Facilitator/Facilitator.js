@@ -4,6 +4,7 @@ import { Text, Input, Item, Button } from 'native-base';
 import { connect } from 'react-redux';
 import io from "socket.io-client/dist/socket.io";
 import APIConfig from '../../config/api';
+import TimerCountdown from 'react-native-timer-countdown';
 
 import {
   join_room,
@@ -37,6 +38,19 @@ class FacilitatorComponent extends React.Component {
           <Text style={styles.welcomeTitle}>  Welcome, {this.props.username}</Text>
           {this.props.error_message === '' ? null : <Text style={{color:'red'}}>{this.props.error_message}</Text>}
           <Queue label={"Facilitator"} socket={socket}/>
+          <TimerCountdown
+              initialSecondsRemaining={1000*120}
+              onTick={secondsRemaining => console.log('tick', secondsRemaining)}
+              onTimeElapsed={() => console.log('complete')}
+              allowFontScaling={true}
+              style={{ fontSize: 20 }}
+          />
+          <Button
+            onPress={() => this.setState({dummy: 1})}>
+            <Text>
+              Reset
+            </Text>
+          </Button>
       </View>
     );
   }
