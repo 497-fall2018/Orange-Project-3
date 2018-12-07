@@ -61,7 +61,7 @@ class AttendeeComponent extends React.Component {
 
         <Row size={5}>
             <View style={styles.container}>
-                <Queue label={'Attendee'}/>
+                <Queue label={'Attendee'} socket={socket}/>
             </View>
         </Row>
 
@@ -93,19 +93,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-
   topContainer: {
     flexDirection:"row"
   },
 
   button: {
-    marginRight: 20,
-    marginLeft: 20,
+    marginRight: 75,
+    marginLeft: 75,
   },
 
   gridTop: {
     flex: 1,
-    backgroundColor: '#97D9FC',
+    backgroundColor: '#0A60FF',
     justifyContent: 'center',
   },
 
@@ -115,8 +114,8 @@ const styles = StyleSheet.create({
   },
 
   cardBot: {
-    marginLeft: 15,
-    marginRight: 15,
+    marginLeft: 50,
+    marginRight: 50,
     paddingBottom: 10,
     paddingTop: 10,
 
@@ -124,19 +123,10 @@ const styles = StyleSheet.create({
 
   gridBot: {
     flex: 1,
-    backgroundColor: '#97D9FC',
+    backgroundColor: '#0A60FF',
     alignItems: 'center',
     justifyContent: 'center',
   },
-
-
-  // headerText: {
-  //   textAlign: "left"
-  // },
-  //
-  // infoText: {
-  //   textAlign: "center"
-  // },
 
 });
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Text, Input, Item, Button } from 'native-base';
+import { Text, Input, Item, Button, H1, H2, H3, Card } from 'native-base';
+import { Col, Row, Grid } from "react-native-easy-grid";
 import { connect } from 'react-redux';
 import io from "socket.io-client/dist/socket.io";
 import APIConfig from '../../config/api';
@@ -33,60 +34,125 @@ class FacilitatorComponent extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-          <Text style={styles.roomTitle}>  Room: {this.props.roomcode}</Text>
-          <Text style={styles.welcomeTitle}>  Welcome, {this.props.username}</Text>
-          {this.props.error_message === '' ? null : <Text style={{color:'red'}}>{this.props.error_message}</Text>}
-          <Queue label={"Facilitator"} socket={socket}/>
-          <TimerCountdown
-              initialSecondsRemaining={1000*120}
-              onTick={secondsRemaining => console.log('tick', secondsRemaining)}
-              onTimeElapsed={() => console.log('complete')}
-              allowFontScaling={true}
-              style={{ fontSize: 20 }}
-          />
-          <Button
-            onPress={() => this.setState({dummy: 1})}>
-            <Text>
-              Reset
-            </Text>
-          </Button>
-      </View>
+      // <View style={styles.container}>
+      //     <Text style={styles.roomTitle}>  Room: {this.props.roomcode}</Text>
+      //     <Text style={styles.welcomeTitle}>  Welcome, {this.props.username}</Text>
+      //     {this.props.error_message === '' ? null : <Text style={{color:'red'}}>{this.props.error_message}</Text>}
+      //     <Queue label={"Facilitator"} socket={socket}/>
+      //     <TimerCountdown
+      //         initialSecondsRemaining={1000*120}
+      //         onTick={secondsRemaining => console.log('tick', secondsRemaining)}
+      //         onTimeElapsed={() => console.log('complete')}
+      //         allowFontScaling={true}
+      //         style={{ fontSize: 20 }}
+      //     />
+      //     <Button
+      //       onPress={() => this.setState({dummy: 1})}>
+      //       <Text>
+      //         Reset
+      //       </Text>
+      //     </Button>
+      // </View>
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      <Grid>
+
+        <Row size={1}>
+          <View style={styles.gridTop}>
+              <Card style={styles.cardTop}>
+                <View style={styles.container, styles.topContainer}>
+                    <View style={styles.container}>
+                      <H1>Room:</H1>
+                      <Text textAlign="center"> {this.props.roomcode} </Text>
+                    </View>
+
+                    <View style={styles.container}>
+                      <H1>Name:</H1>
+                      <Text textAlign="center"> {this.props.username}</Text>
+                    </View>
+                </View>
+              </Card>
+          </View>
+        </Row>
+
+        <Row size={5}>
+            <View style={styles.container}>
+                <Queue label={"Facilitator"} socket={socket}/>
+            </View>
+        </Row>
+
+        <Row size={1}>
+          <View style={styles.gridTop}>
+              <Card style={styles.cardBot}>
+                <View style={styles.container, styles.topContainer}>
+                    <View style={styles.container}>
+                      <Button block
+                             onPress={() => this.setState({dummy: 1})}
+                             style={styles.button}>
+                        <Text>Reset</Text>
+                      </Button>
+                    </View>
+
+                    <View style={styles.container}>
+                      <TimerCountdown
+                          initialSecondsRemaining={1000*120}
+                          onTick={secondsRemaining => console.log('tick', secondsRemaining)}
+                          onTimeElapsed={() => console.log('complete')}
+                          allowFontScaling={true}
+                          style={{ fontSize: 20 }}
+                      />
+                    </View>
+                  </View>
+                </Card>
+            </View>
+
+          </Row>
+
+      </Grid>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: '#fff',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
-
   container: {
-    //display: 'flex',
     flex: 1,
-    justifyContent: 'center',
-    alignContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#fff',
-    paddingBottom: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
-
-  roomTitle: {
-    marginTop: 10,
-    marginBottom: 25,
-    fontSize: 50
-    //fontFamily: "Roboto"
+  topContainer: {
+    flexDirection:"row"
   },
 
-  welcomeTitle: {
-    marginTop: 10,
-    marginBottom: 25,
-    fontSize: 50
-    //fontFamily: "Roboto"
+  button: {
+    marginRight: 20,
+    marginLeft: 20,
+  },
+
+  gridTop: {
+    flex: 1,
+    backgroundColor: '#0A60FF',
+    justifyContent: 'center',
+  },
+
+  cardTop: {
+    marginLeft: 15,
+    marginRight: 15
+  },
+
+  cardBot: {
+    marginLeft: 15,
+    marginRight: 15,
+    paddingBottom: 10,
+    paddingTop: 10,
+
+  },
+
+  gridBot: {
+    flex: 1,
+    backgroundColor: '#0A60FF',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
 });

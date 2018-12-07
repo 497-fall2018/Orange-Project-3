@@ -72,7 +72,6 @@ class QueueComponent extends React.Component {
     member: {
       marginTop: 10,
       marginBottom: 10,
-      backgroundColor: 'lightgrey',
     },
 
     memberText: {

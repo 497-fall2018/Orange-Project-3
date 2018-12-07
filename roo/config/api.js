@@ -1,6 +1,6 @@
 class APIConfig {
 
-    static apiRoot = 'http://1bcaec36.ngrok.io';
+    static apiRoot = 'http://5255da90.ngrok.io';
 }
 
 export default APIConfig;
